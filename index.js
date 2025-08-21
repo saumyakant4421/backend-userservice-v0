@@ -4,15 +4,19 @@ const dotenv = require("dotenv");
 const admin = require("./firebase"); // Use the updated Firebase config
 const userRoutes = require("./routes/userRoutes");
 
+
 const helmet = require("helmet");
-app.use(helmet());
 
 // ✅ Load environment variables
 dotenv.config();
 
+
 const app = express();
+app.use(helmet());
 app.use(cors());
 app.use(express.json());
+// Health check endpoint for deployment
+app.get('/health', (req, res) => res.send('OK'));
 
 // ✅ Ensure Firebase is initialized before using routes
 console.log("Firebase Initialized Successfully.");

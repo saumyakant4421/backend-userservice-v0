@@ -11,3 +11,5 @@ firebaseServiceAccountKey.json
 # Build / cache
 dist/
 coverage/
+
+test-smtp.js
