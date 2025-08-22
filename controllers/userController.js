@@ -371,8 +371,16 @@ exports.getWatchlist = async (req, res) => {
       return res.status(200).json([]); // Return empty array if no watchlist
     }
     const watchlist = watchlistDoc.data();
-    const sortedMovies = watchlist.movies.sort(
-      (a, b) => b.addedAt.toDate() - a.watchedAt.toDate()
+  const sortedMovies = watchlist.movies.sort(
+      (a, b) => {
+        try {
+          const aDate = a.addedAt?.toDate ? a.addedAt.toDate() : new Date(a.addedAt || 0);
+          const bDate = b.addedAt?.toDate ? b.addedAt.toDate() : new Date(b.addedAt || 0);
+          return bDate - aDate;
+        } catch (e) {
+          return 0;
+        }
+      }
     );
     res.status(200).json(sortedMovies);
   } catch (error) {
