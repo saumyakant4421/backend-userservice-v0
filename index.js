@@ -22,6 +22,8 @@ app.get('/health', (req, res) => res.send('OK'));
 console.log("Firebase Initialized Successfully.");
 
 app.use("/api/user", userRoutes);
+// Backward-compatible alias to avoid 404s if clients call /api/users/*
+app.use("/api/users", userRoutes);
 
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => console.log(`User Service running on port ${PORT}`));
